@@ -1,2 +1,93 @@
-# Bank-Churn-Prediction
-Machine Learning project focused on predicting bank customer churn using Python, scikit-learn, and XGBoost. Includes EDA, feature engineering, model comparison, hyperparameter tuning, and SHAP-based interpretability.
+# Bank Churn Prediction 🏦📉
+
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Library](https://img.shields.io/badge/Library-Scikit--Learn%20%7C%20XGBoost-orange)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+
+End-to-end Data Science project aiming to predict customer churn in the banking sector using machine learning.
+
+The primary business objective was to build a model that identifies customers at risk of leaving, while maintaining a strategic balance between **Recall** (catching churners) and **Precision** (avoiding false alarms) to optimize retention campaign budgets.
+
+---
+
+## 📌 Key Results & Business Recommendations
+
+After experimenting with multiple algorithms, **XGBoost** was selected as the production model ("Champion Model").
+
+| Metric | Score (Test Set) | Business Interpretation |
+| :--- | :--- | :--- |
+| **ROC-AUC** | **0.88** | Excellent ability to distinguish between loyal and churning customers. |
+| **Recall** | **64%** | The model detects nearly 2/3 of all customers who are actually leaving. |
+| **Precision** | **66%** | When the model flags a risk, it is correct 66% of the time (minimizing "spam" and costs). |
+
+### What drives churn? (Insights)
+Model analysis (SHAP & Feature Importance) revealed critical risk factors:
+1.  **Number of Products:** Customers with **3 or 4 products** are in the critical risk group. However, having exactly 2 products significantly increases loyalty.
+2.  **Age:** The **45-60 age demographic** shows a much higher tendency to resign.
+3.  **Activity:** Inactive members (`IsActiveMember = 0`) are significantly more likely to churn.
+
+**Strategic Recommendation:**
+Focus retention efforts on **inactive clients aged 45+ holding >2 products**. Due to the model's high precision, the bank can safely offer this segment higher-value incentives (e.g., cash bonuses) with minimal risk of wasting budget on customers who would have stayed anyway.
+
+---
+
+## 📊 Visualizations
+
+### 1. Model Decision Factors (SHAP Values)
+The plot below illustrates how specific features impact the probability of churn.
+*(It clearly shows that older age [red dots] pushes the decision towards Churn [to the right]).*
+
+![SHAP Summary Plot](images/Feature_value_model3.png)
+
+### 2. Model Effectiveness (Confusion Matrix)
+The model successfully minimizes False Positives, making it cost-effective for deployment.
+
+![Confusion Matrix](images/Confusion_Matrix_model3.png)
+
+---
+
+## ⚙️ Methodology & Process
+
+The project was executed in the following stages:
+
+1.  **Exploratory Data Analysis (EDA):**
+    * Identified a non-linear relationship between product count and churn.
+    * Detected a strong correlation between age and customer decisions.
+2.  **Data Preprocessing:**
+    * Scaling numerical features (`StandardScaler`).
+    * One-Hot Encoding for categorical variables (Geography, Gender).
+    * Dropping irrelevant identifiers (`CustomerId`, `Surname`).
+3.  **Handling Class Imbalance:**
+    * The dataset was imbalanced (80% Retained / 20% Churned).
+    * Applied **SMOTE** (Synthetic Minority Over-sampling Technique) strictly on the training set to prevent data leakage.
+4.  **Modeling & Evaluation:**
+    * **Baseline:** Logistic Regression (High Recall, but very low Precision - too "aggressive").
+    * **Challenger:** Random Forest (Good performance, handled non-linearity well).
+    * **Final:** **XGBoost** + Hyperparameter Tuning (`RandomizedSearchCV`). Achieved the best F1-Score balance.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Python 3.x**
+* **Libraries:** Pandas, NumPy, Scikit-Learn, XGBoost, Imbalanced-learn (SMOTE)
+* **Visualization:** Matplotlib, Seaborn, SHAP
+
+---
+
+## 🚀 How to Run
+
+1.  Clone the repository:
+    ```bash
+    git clone [https://github.com/YOUR_USERNAME/bank-churn-prediction.git](https://github.com/YOUR_USERNAME/bank-churn-prediction.git)
+    ```
+2.  Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  Run the Jupyter Notebook:
+    ```bash
+    jupyter notebook "Bank Churn Predictions.ipynb"
+    ```
+
+---
