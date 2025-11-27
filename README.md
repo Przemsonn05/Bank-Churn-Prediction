@@ -40,7 +40,7 @@ The plot below illustrates how specific features impact the probability of churn
 ![SHAP Summary Plot](images/Feature_value_model3.png)
 
 ### 2. Model Effectiveness (Confusion Matrix)
-The model successfully minimizes False Positives, making it cost-effective for deployment.
+The model effectively minimizes false positives, accurately identifying high-risk customers while avoiding unnecessary interventions for loyal clients, thereby making retention campaigns more cost-efficient and maximizing the bank’s overall return on investment.
 
 ![Confusion Matrix](images/Confusion_Matrix_model3.png)
 
@@ -69,8 +69,8 @@ The project was executed in the following stages:
 
 ## 🛠️ Tech Stack
 
-* **Python 3.x**
-* **Libraries:** Pandas, NumPy, Scikit-Learn, XGBoost, Imbalanced-learn (SMOTE)
+* **Python 3.12.11**
+* **Libraries:** Pandas, NumPy, Scikit-Learn, XGBoost, Imbalanced-learn (SMOTE), Joblib
 * **Visualization:** Matplotlib, Seaborn, SHAP
 
 ---
@@ -79,7 +79,7 @@ The project was executed in the following stages:
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/YOUR_USERNAME/bank-churn-prediction.git](https://github.com/YOUR_USERNAME/bank-churn-prediction.git)
+    git clone <repository url>
     ```
 2.  Install dependencies:
     ```bash
