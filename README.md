@@ -1,9 +1,5 @@
 # Bank Churn Prediction 🏦📉
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![Library](https://img.shields.io/badge/Library-Scikit--Learn%20%7C%20XGBoost-orange)
-![Status](https://img.shields.io/badge/Status-Completed-success)
-
 End-to-end Data Science project aiming to predict customer churn in the banking sector using machine learning.
 
 The primary business objective was to build a model that identifies customers at risk of leaving, while maintaining a strategic balance between **Recall** (catching churners) and **Precision** (avoiding false alarms) to optimize retention campaign budgets.
