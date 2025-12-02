@@ -85,5 +85,4 @@ The project was executed in the following stages:
     ```bash
     jupyter notebook "Bank Churn Predictions.ipynb"
     ```
-
 ---
