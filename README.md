@@ -8,13 +8,13 @@ The primary business objective was to build a model that identifies customers at
 
 ## 📌 Key Results & Business Recommendations
 
-After experimenting with multiple algorithms, **XGBoost** was selected as the production model ("Champion Model").
+After experimenting with multiple algorithms, **LightGBM** was selected as the production model ("Champion Model").
 
 | Metric | Score (Test Set) | Business Interpretation |
 | :--- | :--- | :--- |
 | **ROC-AUC** | **0.88** | Excellent ability to distinguish between loyal and churning customers. |
-| **Recall** | **64%** | The model detects nearly 2/3 of all customers who are actually leaving. |
-| **Precision** | **66%** | When the model flags a risk, it is correct 66% of the time (minimizing "spam" and costs). |
+| **Recall** | **62%** | The model detects nearly 2/3 of all customers who are actually leaving. |
+| **Precision** | **67.5%** | When the model flags a risk, it is correct 67.5% of the time (minimizing "spam" and costs). |
 
 ### What drives churn? (Insights)
 Model analysis (SHAP & Feature Importance) revealed critical risk factors:
@@ -59,14 +59,14 @@ The project was executed in the following stages:
 4.  **Modeling & Evaluation:**
     * **Baseline:** Logistic Regression (High Recall, but very low Precision - too "aggressive").
     * **Challenger:** Random Forest (Good performance, handled non-linearity well).
-    * **Final:** **XGBoost** + Hyperparameter Tuning (`RandomizedSearchCV`). Achieved the best F1-Score balance.
+    * **Final:** **LightGBM** + Hyperparameter Tuning (`RandomizedSearchCV`). Achieved the best F1-Score balance.
 
 ---
 
 ## 🛠️ Tech Stack
 
 * **Python 3.12.11**
-* **Libraries:** Pandas, NumPy, Scikit-Learn, XGBoost, Imbalanced-learn (SMOTE), Joblib
+* **Libraries:** Pandas, NumPy, Scikit-Learn, LightGBM, Imbalanced-learn (SMOTE), Joblib
 * **Visualization:** Matplotlib, Seaborn, SHAP
 
 ---
