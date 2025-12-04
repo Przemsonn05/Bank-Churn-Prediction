@@ -152,19 +152,17 @@ Train/Test Split → SMOTE → Modeling → Evaluation → Explainability
   
 - Distribution Diagnostics: Diagnosed significant right-skewness in financial features (Balance, EstimatedSalary)
   
-- -Risk Cohort Identification: Detected high-risk segments (inactive members aged 45-60)
+- Risk Cohort Identification: Detected high-risk segments (inactive members aged 45-60)
   
 - Outlier Strategy: Retained financial outliers as they represent high-net-worth individuals critical to business
 
-2. **Advanced Feature Engineering**
+2. **Advanced Feature Engineering and Preprocessing Techniques**
 
 - BalanceSalaryRatio: Identifies customers who treat the bank as their primary savings institution
   
 - BalancePerProduct: Distinguishes engaged clients from "phantom" users (many products, low balance)
   
 - TenurePerAge: Captures relationship maturity relative to customer lifecycle stage
-
-2.1 **Preprocessing Techniques:**
 
 - RobustScaler: Mitigates outlier impact without information loss (better than StandardScaler for financial data)
   
