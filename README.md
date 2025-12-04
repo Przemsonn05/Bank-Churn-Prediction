@@ -19,7 +19,7 @@ After experimenting with multiple algorithms, **LightGBM** was selected as the p
 ## 🔍 Key Drivers of Churn
 Comprehensive model interpretability analysis (utilizing SHAP values and Feature Importance) revealed the following primary determinants of customer attrition:
 
-1. Product Portfolio Composition (Primary Driver)
+1. **Product Portfolio Composition (Primary Driver)**
 
 - High Risk: Customers holding 3-4 products exhibit drastically elevated churn probability
   
@@ -27,7 +27,7 @@ Comprehensive model interpretability analysis (utilizing SHAP values and Feature
   
 - Insight: Product proliferation may indicate customer confusion or dissatisfaction rather than engagement
 
-2. Demographic Risk Factors
+2. **Demographic Risk Factors**
 
 - Age Cohort: The 45-60 age group demonstrates the highest propensity to churn
   
@@ -35,7 +35,7 @@ Comprehensive model interpretability analysis (utilizing SHAP values and Feature
 
 - Action: Develop age-specific value propositions for mid-to-late career professionals
 
-3. Member Engagement Status
+3. **Member Engagement Status**
 
 - Critical Indicator: Inactive members (IsActiveMember = 0) are primary churn candidates
   
@@ -43,7 +43,7 @@ Comprehensive model interpretability analysis (utilizing SHAP values and Feature
   
 - Recommendation: Implement proactive re-engagement campaigns for dormant accounts
 
-4. Financial Indicators
+4. **Financial Indicators**
 
 - Balance per Product: Higher balance concentrated in fewer products indicates stronger engagement
   
