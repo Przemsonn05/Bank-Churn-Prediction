@@ -51,7 +51,18 @@ The plot below illustrates how specific features impact the probability of churn
 
 ![SHAP Summary Plot](images/Feature_value_model3.png)
 
+Based on the SHAP summary plots and the feature importance analysis, the LightGBM model identifies:
+
+- NumOfProducts and Age as the primary drivers of customer churn. Specifically, customers with a high number of products (3 or 4) or those who are older (particularly 45+) are at significantly higher risk of leaving the bank.
+
+- IsActiveMember status is another crucial factor, with inactivity strongly pushing predictions towards churn.
+
+- Geography also plays a key role, with German customers exhibiting a markedly higher churn probability than those from other regions.
+
+- Finally, financial indicators like Balance contribute to the prediction, where higher balances are associated with increased churn risk, also new created feature - 'Balance_per_Product' shows that higher balance per product increases churn, while CreditScore has surprisingly low predictive power but stable.
+
 ### 2. Model Effectiveness (Confusion Matrix)
+
 The model effectively minimizes false positives, accurately identifying high-risk customers while avoiding unnecessary interventions for loyal clients, thereby making retention campaigns more cost-efficient and maximizing the bank’s overall return on investment.
 
 ![Confusion Matrix](images/Confusion_Matrix_model3.png)
