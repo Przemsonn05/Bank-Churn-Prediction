@@ -41,7 +41,7 @@ The model effectively minimizes false positives, accurately identifying high-ris
 
 ---
 
-🔄 End-to-End ML Pipeline
+## 🔄 End-to-End ML Pipeline
 
 The project covers the complete ML development cycle:
 
