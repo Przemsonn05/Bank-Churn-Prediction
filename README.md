@@ -164,7 +164,7 @@ Train/Test Split → SMOTE → Modeling → Evaluation → Explainability
   
 - TenurePerAge: Captures relationship maturity relative to customer lifecycle stage
 
-Preprocessing Techniques:
+2.1 **Preprocessing Techniques:**
 
 - RobustScaler: Mitigates outlier impact without information loss (better than StandardScaler for financial data)
   
@@ -179,8 +179,6 @@ Preprocessing Techniques:
 - Validation Integrity: Preserved original distribution in validation/test sets for unbiased evaluation
 
 4. **Model Selection & Optimization**
-
-Optimization Strategy:
 
 - Bayesian Optimization (Optuna): 200+ hyperparameter combinations explored
   
