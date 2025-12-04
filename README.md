@@ -84,7 +84,7 @@ Key Insights from SHAP Analysis:
 
 - CreditScore exhibits surprisingly low predictive power, indicating churn is primarily behavioral
 
-2. Model Performance (Confusion Matrix)
+### 2. Model Performance (Confusion Matrix)
    
 The confusion matrix demonstrates the model's effectiveness in minimizing false positives while maintaining strong recall:
 
