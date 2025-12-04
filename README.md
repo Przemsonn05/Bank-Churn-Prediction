@@ -77,7 +77,7 @@ Train/Test Split → SMOTE → Modeling → Evaluation → Explainability
                 ▼
       ┌─────────────────────┐
       │   Evaluation +      │
-      │  Model Explainability│
+      │ Model Explainability│
       └─────────────────────┘
 ```
 
