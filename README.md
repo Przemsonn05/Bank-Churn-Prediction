@@ -12,9 +12,9 @@ After experimenting with multiple algorithms, **LightGBM** was selected as the p
 
 | Metric | Score (Test Set) | Business Interpretation |
 | :--- | :--- | :--- |
-| **ROC-AUC** | **0.88** | Excellent ability to distinguish between loyal and churning customers. |
-| **Recall** | **62%** | The model detects nearly 2/3 of all customers who are actually leaving. |
-| **Precision** | **67.5%** | When the model flags a risk, it is correct 67.5% of the time (minimizing "spam" and costs). |
+| **ROC-AUC** | **0.89** | Excellent ability to distinguish between loyal and churning customers. |
+| **Recall** | **66%** | The model detects nearly 2/3 of all customers who are actually leaving. |
+| **Precision** | **64%** | When the model flags a risk, it is correct 64% of the time (minimizing "spam" and costs). |
 
 ### What drives churn? (Insights)
 Model analysis (SHAP & Feature Importance) revealed critical risk factors:
@@ -31,7 +31,6 @@ Focus retention efforts on **inactive clients aged 45+ holding >2 products**. Du
 
 ### 1. Model Decision Factors (SHAP Values)
 The plot below illustrates how specific features impact the probability of churn.
-*(It clearly shows that older age [red dots] pushes the decision towards Churn [to the right]).*
 
 ![SHAP Summary Plot](images/Feature_value_model3.png)
 
@@ -39,6 +38,48 @@ The plot below illustrates how specific features impact the probability of churn
 The model effectively minimizes false positives, accurately identifying high-risk customers while avoiding unnecessary interventions for loyal clients, thereby making retention campaigns more cost-efficient and maximizing the bank’s overall return on investment.
 
 ![Confusion Matrix](images/Confusion_Matrix_model3.png)
+
+---
+
+🔄 End-to-End ML Pipeline
+
+The project covers the complete ML development cycle:
+
+```powershell
+Data → EDA → Preprocessing → Feature Engineering → 
+Train/Test Split → SMOTE → Modeling → Evaluation → Explainability
+```
+
+```powershell
+        ┌────────────┐
+        │   Raw Data │
+        └─────┬──────┘
+              ▼
+     ┌───────────────────┐
+     │ Exploratory Data  │
+     │     Analysis      │
+     └─────────┬─────────┘
+               ▼
+  ┌──────────────────────────┐
+  │  Preprocessing & Feature │
+  │      Engineering         │
+  └────────────┬─────────────┘
+               ▼
+   ┌────────────────────────┐
+   │ Train / Test Split     │
+   │  + SMOTE on training   │
+   └───────────┬────────────┘
+               ▼
+     ┌──────────────────────┐
+     │   Model Training     │
+     │  (Baseline → LGBM)   │
+     └──────────┬───────────┘
+                ▼
+      ┌─────────────────────┐
+      │   Evaluation +      │
+      │  Model Explainability│
+      └─────────────────────┘
+```
 
 ---
 
@@ -59,14 +100,14 @@ The project was executed in the following stages:
 4.  **Modeling & Evaluation:**
     * **Baseline:** Logistic Regression (High Recall, but very low Precision - too "aggressive").
     * **Challenger:** Random Forest (Good performance, handled non-linearity well).
-    * **Final:** **LightGBM** + Hyperparameter Tuning (`RandomizedSearchCV`). Achieved the best F1-Score balance.
+    * **Final:** **LightGBM** + Hyperparameter Tuning (Optuna). Achieved the best F1-Score balance.
 
 ---
 
 ## 🛠️ Tech Stack
 
 * **Python 3.12.11**
-* **Libraries:** Pandas, NumPy, Scikit-Learn, LightGBM, Imbalanced-learn (SMOTE), Joblib
+* **Libraries:** Pandas, NumPy, Scikit-Learn, LightGBM, Imbalanced-learn (SMOTE), Joblib, Optuna
 * **Visualization:** Matplotlib, Seaborn, SHAP
 
 ---
