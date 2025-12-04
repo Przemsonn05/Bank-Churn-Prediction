@@ -21,37 +21,37 @@ Comprehensive model interpretability analysis (utilizing SHAP values and Feature
 
 1. Product Portfolio Composition (Primary Driver)
 
-- ⚠️ High Risk: Customers holding 3-4 products exhibit drastically elevated churn probability
+- High Risk: Customers holding 3-4 products exhibit drastically elevated churn probability
   
-- ✅ Optimal Engagement: Holding exactly 2 products correlates strongly with retention, suggesting optimal service utilization
+- Optimal Engagement: Holding exactly 2 products correlates strongly with retention, suggesting optimal service utilization
   
-- 📊 Insight: Product proliferation may indicate customer confusion or dissatisfaction rather than engagement
+- Insight: Product proliferation may indicate customer confusion or dissatisfaction rather than engagement
 
 2. Demographic Risk Factors
 
-- 👴 Age Cohort: The 45-60 age group demonstrates the highest propensity to churn
+- Age Cohort: The 45-60 age group demonstrates the highest propensity to churn
   
-- 🌍 Geography: German customers show significantly higher churn rates compared to French and Spanish customers
+- Geography: German customers show significantly higher churn rates compared to French and Spanish customers
 
-- 💡 Action: Develop age-specific value propositions for mid-to-late career professionals
+- Action: Develop age-specific value propositions for mid-to-late career professionals
 
 3. Member Engagement Status
 
-- 🚨 Critical Indicator: Inactive members (IsActiveMember = 0) are primary churn candidates
+- Critical Indicator: Inactive members (IsActiveMember = 0) are primary churn candidates
   
-- ✅ Protective Factor: Active engagement serves as a significant retention buffer
+- Protective Factor: Active engagement serves as a significant retention buffer
   
-- 📈 Recommendation: Implement proactive re-engagement campaigns for dormant accounts
+- Recommendation: Implement proactive re-engagement campaigns for dormant accounts
 
 4. Financial Indicators
 
-- 💰 Balance per Product: Higher balance concentrated in fewer products indicates stronger engagement
+- Balance per Product: Higher balance concentrated in fewer products indicates stronger engagement
   
-- 💳 Credit Score: Surprisingly low predictive power, suggesting churn is more behavioral than credit-risk driven
+- Credit Score: Surprisingly low predictive power, suggesting churn is more behavioral than credit-risk driven
   
-- 📊 Salary-to-Balance Ratio: Customers who maintain high balances relative to income show stronger loyalty
+- Salary-to-Balance Ratio: Customers who maintain high balances relative to income show stronger loyalty
 
-## 💡 Strategic Recommendation
+## Strategic Recommendation
 
 - Implement a High-Precision Retention Strategy: Resource allocation should prioritize inactive clients aged 45+ holding >2 products.
 
