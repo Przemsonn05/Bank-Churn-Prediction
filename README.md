@@ -78,9 +78,9 @@ Key Insights from SHAP Analysis:
   
 - Balance and Balance_per_Product show nuanced effects:
 
-        - Higher absolute balance correlates with increased churn risk
+  - Higher absolute balance correlates with increased churn risk
 
-        - Higher balance per product (concentrated engagement) reduces risk
+  - Higher balance per product (concentrated engagement) reduces risk
 
 - CreditScore exhibits surprisingly low predictive power, indicating churn is primarily behavioral
 
