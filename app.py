@@ -4,11 +4,8 @@ import pandas as pd
 import numpy as np
 import os
 
-# --- PAGE CONFIGURATION ---
-# This must be the very first streamlit command
 st.set_page_config(page_title="Churn Analysis App", layout="wide")
 
-# --- CUSTOM CSS ---
 st.markdown("""
     <style>
     /* Background gradient */
@@ -59,26 +56,22 @@ st.markdown("""
     
     /* Info boxes */
     .stAlert {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.4);
         border-radius: 10px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- HELPER FUNCTIONS ---
 def yes_no_to_int(value):
     """Converts 'Yes'/'No' to 1/0"""
     return 1 if value == "Yes" else 0
 
-# --- MODEL LOADING ---
 class DummyModel:
     """
     A placeholder model to prevent the app from crashing 
     if the actual model file is missing during testing.
     """
     def predict_proba(self, data):
-        # Returns a random probability for demonstration
-        # [probability_class_0, probability_class_1]
         val = np.random.uniform(0, 1)
         return [[1-val, val]]
 
@@ -100,7 +93,6 @@ def load_model():
 
 model = load_model()
 
-# --- NAVIGATION STATE ---
 if 'page' not in st.session_state:
     st.session_state.page = 'home'
 
@@ -108,7 +100,6 @@ def navigate_to(page_name):
     st.session_state.page = page_name
     st.rerun()
 
-# --- HOME PAGE ---
 def home_page():
     st.title("🏠 Customer Churn Analysis App")
     st.write("### Select an option below to get started")
@@ -147,10 +138,32 @@ def home_page():
 
     st.divider()
 
-    st.subheader("About This Project")
-    st.markdown("Feel free to explore the features above! 😊")
+    st.markdown("""
+        <div style="text-align: center;">
+            <h3>About This Project</h3>
+        </div>
+        """, unsafe_allow_html=True)
 
-# --- CALCULATOR PAGE ---
+    st.markdown("""
+    <div style="text-align: center;">
+    This project is an end-to-end <b>Bank Churn Prediction</b> analysis aimed at understanding customer behavior and identifying those at risk of leaving a bank.<br><br>
+
+    <b>Bank churn</b> refers to the phenomenon where customers stop using a bank’s services and move to a competitor. Predicting churn is crucial for financial institutions because retaining an existing customer is typically much more cost-effective than acquiring a new one. Understanding churn patterns also helps banks offer personalized services and improve customer satisfaction.<br><br>
+
+    <b>Key Highlights of This Project:</b><br>
+    • <b>Objective:</b> Build a predictive model that accurately identifies high-risk customers, balancing metrics like <b>Recall</b> and <b>Precision</b> to make retention campaigns cost-effective.<br>
+    • <b>Data Analysis & Feature Engineering:</b> Extensive Exploratory Data Analysis (EDA), handling outliers, correlations, and feature engineering like <i>Balance-to-Salary Ratio</i> and <i>CreditScore-to-Age Ratio</i>.<br>
+    • <b>Modeling & Machine Learning:</b> Tested Logistic Regression, Random Forest, and <b>LightGBM</b> with hyperparameter tuning. Evaluated using F1-Score, ROC-AUC, and confusion matrices.<br>
+    • <b>Handling Class Imbalance:</b> Applied <b>SMOTE</b> strictly on training data to improve detection of churners.<br>
+    • <b>Visualization & Interpretability:</b> Used <b>Seaborn, Matplotlib, and SHAP</b> for feature importance, customer behavior trends, and model decisions.<br>
+    • <b>Technology Stack:</b> Python 3.12, <b>Pandas, NumPy, Scikit-Learn, LightGBM, Imbalanced-learn, Joblib</b>, and <b>Streamlit</b> for interactive dashboards.<br><br>
+
+    This project demonstrates the technical steps in predictive modeling while providing actionable business insights. Customers aged 45+ with multiple products who are inactive are more likely to churn, enabling targeted retention strategies.<br><br>
+
+    Feel free to explore the interactive visualizations, model predictions, and feature insights above! 😊
+    </div>
+    """, unsafe_allow_html=True)
+
 def calculate_page():
     st.title("Calculate Client Churn")
     
@@ -161,33 +174,26 @@ def calculate_page():
     
     st.subheader("Enter Customer Information:")
     
-    # Input Layout
     col1, col2 = st.columns(2)
     
     with col1:
-        Age = st.number_input("Age", min_value=18, max_value=100, value=30)
-        Gender = st.selectbox("Gender", ["Male", "Female"])
-        Is_active_member = st.selectbox("Is Active Member", ["No", "Yes"])
-        Geography = st.selectbox("Geography", ["France", "Germany", "Spain"])
+        Age = st.number_input("Age", min_value=18, max_value=100, value=18)
+        Gender = st.selectbox("Gender", ["Male", "Female"], None)
+        Is_active_member = st.selectbox("Is Active Member", ["No", "Yes"], None)
     
     with col2:
-        Number_of_products = st.selectbox("Number of Products", [1, 2, 3, 4])
         Tenure = st.number_input("Tenure (months)", min_value=0, max_value=10, value=1)
-        Has_cr_card = st.selectbox("Has Credit Card", ["No", "Yes"])
-        Credit_score = st.slider("Credit Score", min_value=300, max_value=850, value=600, step=1)
+        Number_of_products = st.selectbox("Number of Products", [1, 2, 3, 4], None)
+        Has_cr_card = st.selectbox("Has Credit Card", ["No", "Yes"], None)
 
-    # Full width sliders for monetary values
-    st.write("") # Spacer
-    col3, col4 = st.columns(2)
-    with col3:
-        Estimated_salary = st.slider("Estimated Salary ($)", min_value=0.0, max_value=200000.0, value=50000.0, step=500.0)
-    with col4:
-        Balance = st.slider("Account Balance ($)", min_value=0.0, max_value=250000.0, value=0.0, step=500.0)
+    Geography = st.selectbox("Geography", ["France", "Germany", "Spain"], None)
+    Credit_score = st.slider("Credit Score", min_value=300, max_value=850, value=0, step=1)
+    Estimated_salary = st.slider("Estimated Salary ($)", min_value=0.0, max_value=200000.0, value=0.0, step=500.0)
+    Balance = st.slider("Account Balance ($)", min_value=0.0, max_value=250000.0, value=0.0, step=500.0)
     
-    st.write("---")
+    st.divider()
     
     if st.button("🔮 Predict Churn Probability", type="primary", use_container_width=True):
-        # Prepare input data matching model features
         input_data = pd.DataFrame({
             "CreditScore": [Credit_score],
             "Geography_Germany": [1 if Geography == "Germany" else 0],
@@ -205,21 +211,19 @@ def calculate_page():
         })
         
         try:
-            # Predict
             prediction_proba = model.predict_proba(input_data)[0]
             churn_probability = prediction_proba[1] * 100
             
-            # Display Results
-            st.markdown("<div class='card'>", unsafe_allow_html=True)
+            #st.markdown("<div class='card'>", unsafe_allow_html=True)
             st.subheader("Prediction Results")
             
             col_res1, col_res2 = st.columns(2)
             with col_res1:
                 st.metric("Churn Probability", f"{churn_probability:.1f}%")
             with col_res2:
-                if churn_probability > 70:
-                    st.error("HIGH RISK - Immediate action required")
-                elif churn_probability > 40:
+                if churn_probability > 65:
+                    st.error("HIGH RISK - Action required")
+                elif churn_probability > 50:
                     st.warning("MEDIUM RISK - Monitor closely")
                 else:
                     st.success("LOW RISK - Customer is stable")
@@ -248,7 +252,7 @@ def explain_page():
     with col1:
         st.markdown("""
         **1. Data Preprocessing**
-        * **Scaling:** Numerical features were scaled using `RobustScaler` to normalize range.
+        * **Scaling:** Numerical features were scaled using RobustScaler to normalize range.
         * **Encoding:** Categorical variables (Geography, Gender) were converted using One-Hot Encoding.
         * **Cleaning:** Irrelevant identifiers (IDs, Surnames) were removed.
         """)
@@ -270,21 +274,21 @@ def explain_page():
     m_col1, m_col2, m_col3 = st.columns(3)
     
     with m_col1:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
-        st.metric("ROC-AUC Score", "0.88")
+        #st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.metric("ROC-AUC Score", "0.89")
         st.caption("Excellent ability to distinguish between loyal and churning customers.")
         st.markdown("</div>", unsafe_allow_html=True)
         
     with m_col2:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
-        st.metric("Recall", "62%")
+        #st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.metric("Recall", "66%")
         st.caption("Detects nearly 2/3 of all customers who are actually leaving.")
         st.markdown("</div>", unsafe_allow_html=True)
         
     with m_col3:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
-        st.metric("Precision", "67.5%")
-        st.caption("Minimizes 'spam'—when the model predicts churn, it is correct 67.5% of the time.")
+        #st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.metric("Precision", "64%")
+        st.caption("Minimizes 'spam'—when the model predicts churn, it is correct 64% of the time.")
         st.markdown("</div>", unsafe_allow_html=True)
 
     st.divider()
@@ -295,11 +299,16 @@ def explain_page():
     st.write("")
     
     st.markdown("""
-    * **Feature Importance:** The model identified that **Product Count**, **Age**, and **Member Activity** are the strongest predictors.
-    * **Confusion Matrix:** The model effectively minimizes false positives, allowing for cost-efficient retention campaigns.
+    * **Feature Importance:** Analysis using SHAP values revealed that **Product Count**, **Age**, and **Member Activity** are the most influential features driving churn predictions.  
+    - Customers with **3–4 products** show a higher churn risk, while those with exactly **2 products** demonstrate strong loyalty.  
+    - **Age** highlights a critical risk group between **45–60 years**, likely reflecting life-stage financial decisions.  
+    - **Inactive members** (IsActiveMember = 0) are significantly more likely to churn, emphasizing the need for engagement campaigns.
+
+    * **Confusion Matrix & Model Performance:** The model achieves a balanced trade-off between **Recall** and **Precision**, effectively identifying high-risk customers while minimizing false positives.  
+    - This ensures **cost-efficient retention campaigns** by targeting customers who are genuinely at risk, avoiding unnecessary incentives to loyal clients.  
+    - The resulting predictions can inform **strategic segmentation**, prioritizing interventions for the most vulnerable demographic.
     """)
 
-# --- RECOMMENDATIONS PAGE ---
 def recommendations_page():
     st.title("Business Support & Insights")
     
@@ -318,38 +327,39 @@ def recommendations_page():
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        #st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("#### Product Holdings")
         st.write("Customers with **3 or 4 products** are in the critical risk group.")
         st.markdown("**Insight:** Having exactly **2 products** significantly increases loyalty.")
         st.markdown("</div>", unsafe_allow_html=True)
         
     with col2:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        #st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("#### Demographics")
         st.write("The **45-60 age demographic** shows a much higher tendency to resign.")
         st.markdown("**Insight:** Older age pushes the decision probability towards Churn.")
         st.markdown("</div>", unsafe_allow_html=True)
         
     with col3:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        #st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("#### Member Activity")
-        st.write("**Inactive members** (`IsActiveMember = 0`) are significantly more likely to churn.")
+        st.write("**Inactive members** (IsActiveMember = 0) are significantly more likely to churn.")
         st.markdown("**Insight:** Engagement is a leading indicator of retention.")
         st.markdown("</div>", unsafe_allow_html=True)
-
-    st.write("")
 
     st.divider()
 
     st.markdown("### Strategic Recommendations")
     
-    # Strategy Box
     st.markdown("""
-    <div style='background-color: rgba(102, 126, 234, 0.1); padding: 20px; border-radius: 10px; border-left: 5px solid #667eea;'>
-        <h4>Primary Strategy: Precision Targeting</h4>
+    <div style='background-color: rgba(102, 126, 234, 0.1); padding: 25px; border-radius: 10px; border-left: 5px solid #667eea;'>
+        <h4>Precision Targeting: The "Silent Attrition" Cohort</h4>
+        <p style='font-size: 1.1em;'>
+            <b>Target Segment:</b> Inactive clients | Age 45-60 | Holding 3+ Products
+        </p>
         <p>
-            Focus retention efforts specifically on <b>Inactive clients aged 45+ holding >2 products</b>.
+            Our LightGBM model identifies the intersection of these three features as the <b>highest probability churn cluster</b>. 
+            These are often financially mature clients who are likely dissatisfied with product complexity.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -358,12 +368,19 @@ def recommendations_page():
 
     st.markdown("""
     #### Recommended Actions:
-    1.  **High-Value Incentives:** Due to the model's high precision (67.5%), we can safely offer this segment higher-value incentives (e.g., cash bonuses, rate reductions) with minimal risk of wasting budget on customers who would have stayed anyway.
-    2.  **Product Consolidation:** For customers with 3-4 products, review if the bundle is too complex or expensive. Attempt to restructure them into the "sweet spot" of 2 products.
-    3.  **Re-engagement Campaigns:** Launch specific email/app campaigns targeting the 45-60 age group to flip their status from "Inactive" to "Active."
+    
+    1.  **The "2-Product Sweet Spot" Strategy:** * *Insight:* Data shows churn drops significantly for customers with exactly 2 products.
+        * *Action:* For clients with 3-4 products, offer a **Product Consolidation Bundle**. Simplify their portfolio (e.g., merge separate savings accounts) to reduce fees and management effort.
+    
+    2.  **High-Touch Re-engagement for Age 45+:**
+        * *Insight:* This demographic is less responsive to generic app notifications but values relationship banking.
+        * *Action:* Trigger a personal call from a relationship manager focusing on "Financial Health Review" rather than a sales pitch.
+    
+    3.  **Leverage High Precision:**
+        * *Insight:* The model has ~64% Precision, meaning false positives are low.
+        * *Action:* Authorize a higher retention budget for this specific group, knowing the ROI will be positive because the risk is real.
     """)
 
-# === ROUTING ===
 if st.session_state.page == 'home':
     home_page()
 elif st.session_state.page == 'calculate':
