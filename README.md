@@ -146,7 +146,7 @@ Train/Test Split → SMOTE → Modeling → Evaluation → Explainability
 
 ## ⚙️ Methodology & Technical Approach
 
-1. Deep-Dive Exploratory Data Analysis (EDA)
+1. **Deep-Dive Exploratory Data Analysis (EDA)**
 
 - Multivariate Analysis: Uncovered non-linear relationships, identifying the "2-product sweet spot" for customer retention
   
@@ -156,9 +156,7 @@ Train/Test Split → SMOTE → Modeling → Evaluation → Explainability
   
 - Outlier Strategy: Retained financial outliers as they represent high-net-worth individuals critical to business
 
-2. Advanced Feature Engineering
-   
-Domain-Driven Features:
+2. **Advanced Feature Engineering**
 
 - BalanceSalaryRatio: Identifies customers who treat the bank as their primary savings institution
   
@@ -172,7 +170,7 @@ Preprocessing Techniques:
   
 - Native Categorical Support: Leveraged LightGBM's built-in categorical handling (more efficient than One-Hot Encoding)
 
-3. Imbalanced Data Handling
+3. **Imbalanced Data Handling**
 
 - SMOTE (Synthetic Minority Over-sampling Technique): Addressed severe class imbalance (80:20 ratio)
   
@@ -180,7 +178,7 @@ Preprocessing Techniques:
   
 - Validation Integrity: Preserved original distribution in validation/test sets for unbiased evaluation
 
-4. Model Selection & Optimization
+4. **Model Selection & Optimization**
 
 Optimization Strategy:
 
@@ -192,7 +190,7 @@ Optimization Strategy:
   
 - Threshold Tuning: Post-processing optimization via Precision-Recall curve analysis
 
-5. Model Explainability
+5. **Model Explainability**
 
 - SHAP (SHapley Additive exPlanations): Provides both global feature importance and local instance-level explanations
   
