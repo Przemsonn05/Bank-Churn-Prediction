@@ -92,13 +92,13 @@ The confusion matrix demonstrates the model's effectiveness in minimizing false 
 
 Performance Breakdown:
 
-- ✅ True Negatives (1,332): Correctly identified loyal customers (84% specificity)
+- ✅ True Negatives (1,413): Correctly identified loyal customers (84% specificity)
   
-- ✅ True Positives (279): Correctly identified churning customers (66% recall)
+- ✅ True Positives (276): Correctly identified churning customers (66% recall)
   
-- ⚠️ False Positives (245): Loyal customers flagged as at-risk (acceptable trade-off for retention)
+- ⚠️ False Positives (164): Loyal customers flagged as at-risk (acceptable trade-off for retention)
   
-- ❌ False Negatives (144): Missed churners (34% slip-through rate)
+- ❌ False Negatives (147): Missed churners (34% slip-through rate)
 
 ---
 
