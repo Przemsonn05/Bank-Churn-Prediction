@@ -1,8 +1,8 @@
-# Bank Churn Prediction 🏦📉
+# 🏦 Bank Customer Churn Prediction
 
-End-to-end Data Science project aiming to predict customer churn in the banking sector using machine learning.
+This project implements an **end-to-end Machine Learning solution** designed to predict customer attrition in the banking sector. Going beyond simple classification, the primary objective was to build a profit-driven model that identifies high-risk customers while optimizing the trade-off between **Recall** (capturing churners) and **Precision** (minimizing retention costs).
 
-The primary business objective was to build a model that identifies customers at risk of leaving, while maintaining a strategic balance between **Recall** (catching churners) and **Precision** (avoiding false alarms) to optimize retention campaign budgets.
+Powered by a hyper-tuned **LightGBM** model and deployed via a **Streamlit** dashboard, this solution provides actionable insights to support proactive retention strategies and budget optimization.
 
 ---
 
@@ -16,14 +16,31 @@ After experimenting with multiple algorithms, **LightGBM** was selected as the p
 | **Recall** | **66%** | The model detects nearly 2/3 of all customers who are actually leaving. |
 | **Precision** | **64%** | When the model flags a risk, it is correct 64% of the time (minimizing "spam" and costs). |
 
-### What drives churn? (Insights)
-Model analysis (SHAP & Feature Importance) revealed critical risk factors:
-1.  **Number of Products:** Customers with **3 or 4 products** are in the critical risk group. However, having exactly 2 products significantly increases loyalty.
-2.  **Age:** The **45-60 age demographic** shows a much higher tendency to resign.
-3.  **Activity:** Inactive members (`IsActiveMember = 0`) are significantly more likely to churn.
+## 🔍 Key Drivers of Attrition (Feature Analysis)
 
-**Strategic Recommendation:**
-Focus retention efforts on **inactive clients aged 45+ holding >2 products**. Due to the model's high precision, the bank can safely offer this segment higher-value incentives (e.g., cash bonuses) with minimal risk of wasting budget on customers who would have stayed anyway.
+Model interpretability analysis (utilizing SHAP values and Feature Importance) identified the following primary determinants of churn:
+
+Product Portfolio Saturation:
+
+- High Risk: Customers holding 3 or 4 products exhibit a drastically elevated probability of attrition.
+
+- Optimal Engagement: Conversely, a holding of exactly 2 products correlates strongly with high retention, suggesting an optimal level of service utilization.
+
+Demographic Risk Factors:
+
+- The 45-60 age cohort demonstrates the highest propensity to exit, indicating a need for tailored value propositions for mid-to-late career individuals.
+
+Member Engagement:
+
+- Dormancy: Inactive status (IsActiveMember = 0) serves as a leading indicator of churn. Active engagement acts as a significant retention buffer.
+
+## 💡 Strategic Recommendation
+
+- Implement a High-Precision Retention Strategy: Resource allocation should prioritize inactive clients aged 45+ holding >2 products.
+
+- Rationale: Leveraging the model's high precision (64%), the bank can deploy high-value intervention tactics (e.g., financial incentives, premium support) with confidence.
+
+- ROI Impact: This targeted approach mitigates the risk of resource misallocation (wasting budget on customers likely to stay) while maximizing the retention of high-value, at-risk accounts.
 
 ---
 
@@ -83,24 +100,49 @@ Train/Test Split → SMOTE → Modeling → Evaluation → Explainability
 
 ---
 
-## ⚙️ Methodology & Process
+## ⚙️ Methodology & Technical Approach
 
-The project was executed in the following stages:
+The project followed a rigorous, iterative Data Science lifecycle designed to maximize business value and model robustness. The process was structured as follows:
 
-1.  **Exploratory Data Analysis (EDA):**
-    * Identified a non-linear relationship between product count and churn.
-    * Detected a strong correlation between age and customer decisions.
-2.  **Data Preprocessing:**
-    * Scaling numerical features (`StandardScaler`).
-    * One-Hot Encoding for categorical variables (Geography, Gender).
-    * Dropping irrelevant identifiers (`CustomerId`, `Surname`).
-3.  **Handling Class Imbalance:**
-    * The dataset was imbalanced (80% Retained / 20% Churned).
-    * Applied **SMOTE** (Synthetic Minority Over-sampling Technique) strictly on the training set to prevent data leakage.
-4.  **Modeling & Evaluation:**
-    * **Baseline:** Logistic Regression (High Recall, but very low Precision - too "aggressive").
-    * **Challenger:** Random Forest (Good performance, handled non-linearity well).
-    * **Final:** **LightGBM** + Hyperparameter Tuning (Optuna). Achieved the best F1-Score balance.
+1. Deep-Dive Exploratory Data Analysis (EDA)
+
+- Multivariate Analysis: Conducted in-depth analysis to uncover non-linear relationships, identifying the "2-product sweet spot" for customer retention.
+
+- Distribution Diagnostics: Diagnosed significant right-skewness in financial features (Balance, EstimatedSalary) and detected high-risk cohorts among inactive members aged 45-60.
+
+- Outlier Detection: Used IQR method to identify outliers, deciding to retain relevant financial outliers as they represent high-net-worth individuals.
+
+2. Advanced Feature Engineering & Preprocessing
+
+- Domain-Driven Features: Constructed new financial ratios to capture customer purchasing power and genuine engagement, moving beyond raw metrics:
+
+- BalanceSalaryRatio: Identifying customers who treat the bank as their primary savings institution.
+
+- BalancePerProduct: Distinguishing between "phantom" users (many products, low balance) and engaged clients.
+
+- Robust Scaling: Implemented RobustScaler instead of standard scaling to mitigate the impact of significant outliers in financial data without losing information.
+
+- Categorical Encoding: Transitioned from One-Hot Encoding to native categorical support in LightGBM to reduce dimensionality and improve tree-split efficiency.
+
+3. Handling Imbalanced Data (Pipeline Integration)
+
+- SMOTE Implementation: Addressed the severe class imbalance (80:20) using SMOTE (Synthetic Minority Over-sampling Technique).
+
+- Leakage Prevention: Crucially, SMOTE was implemented within an imblearn.pipeline to ensure synthetic samples were generated only during the training phase of cross-validation folds, preserving the integrity of the validation sets.
+
+4. Model Selection & Optimization
+
+Champion-Challenger Framework: Evaluated multiple algorithms to select the best performer:
+
+- Baseline: Logistic Regression (High Recall, low Precision).
+
+- Challenger: Random Forest (Good handling of non-linearities).
+
+- Champion: LightGBM (Superior speed and predictive performance).
+
+Bayesian Optimization (Optuna): Replaced standard Grid Search with Optuna to efficiently explore the hyperparameter space. The optimization objective was set to maximize the F1-Score, prioritizing a balance between precision and recall.
+
+Threshold Tuning: Post-processing optimization involved adjusting the classification decision threshold based on the Precision-Recall curve. This allowed aligning the model's sensitivity with specific business costs, improving the F1-Score beyond default settings.
 
 ---
 
